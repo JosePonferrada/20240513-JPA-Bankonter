@@ -31,7 +31,7 @@ public class Principal extends JFrame {
 	public Principal() {
 		super("Gestión de contratos - Bankonter");
 		
-		this.setBounds(100, 100, 600, 550);
+		this.setBounds(100, 100, 800, 680);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		

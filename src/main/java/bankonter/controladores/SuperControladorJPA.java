@@ -31,7 +31,7 @@ public class SuperControladorJPA {
 	 */
 	protected EntityManager getEntityManager() {
 		if (em == null) {
-			return Persistence.createEntityManagerFactory("Papeleria")
+			return Persistence.createEntityManagerFactory("20240513-JPA-Bankonter")
 					.createEntityManager();
 		}
 		return em;
@@ -135,5 +135,15 @@ public class SuperControladorJPA {
 		}
 		
 	}
+	
+	public void update (Entidad e) {
+		EntityManager em = getEntityManager();
+		
+		em.getTransaction().begin();
+		em.merge(e);
+		em.getTransaction().commit();
+	}
+	
+	
 	
 }

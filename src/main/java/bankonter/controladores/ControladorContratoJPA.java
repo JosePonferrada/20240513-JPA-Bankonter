@@ -1,6 +1,6 @@
 package bankonter.controladores;
 
-import java.util.List;
+import javax.persistence.EntityManager;
 
 import bankonter.entities.Contrato;
 
@@ -26,5 +26,17 @@ public class ControladorContratoJPA extends SuperControladorJPA {
 		return instance;
 	}
 	
+	
+	public void deleteContrato(int id) {
+		EntityManager em = getEntityManager();
+		
+		Contrato c = (Contrato) findById(id);
+		
+		em.getTransaction().begin();
+		// Volvemos a enlazar nuestra entidad con nuestro manager.
+		c = em.merge(c);
+		em.remove(c);
+		em.getTransaction().commit();
+	}
 	
 }
