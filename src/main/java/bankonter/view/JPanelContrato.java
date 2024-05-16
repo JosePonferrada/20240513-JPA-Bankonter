@@ -20,6 +20,8 @@ import javax.swing.text.Highlighter;
 
 import bankonter.controladores.ControladorContratoJPA;
 import bankonter.entities.Contrato;
+import bankonter.entities.Tipocontrato;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.ImageIcon;
@@ -61,7 +63,8 @@ public class JPanelContrato extends JPanel {
 	private JPanel panel_1;
 	private JLabel lblEstadoOperacion;
 	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	
+
+	private Tipocontrato tcCurrent = null;
 
 	/**
 	 * Create the panel.
