@@ -28,6 +28,15 @@ import javax.swing.SwingConstants;
 public class JPanelTipoContrato extends JPanel {
 	
 	private JPanelContrato panelContrato;
+	
+	public JPanelContrato getPanelContrato() {
+		return panelContrato;
+	}
+
+	public void setPanelContrato(JPanelContrato panelContrato) {
+		this.panelContrato = panelContrato;
+	}
+
 	private JDialog jd;
 
 	private static final long serialVersionUID = 1L;
@@ -37,9 +46,8 @@ public class JPanelTipoContrato extends JPanel {
 	private List<Tipocontrato> tiposContrato = 
 			(List<Tipocontrato>) ControladorTipoContratoJPA.getInstance().findAll();
 	
-	private DefaultTableModel dtm = null;
-	private Object datosEnTabla[][] = DatosDeTabla.getDatosDeTabla(tiposContrato);
-	private String titulosEnTabla[] = DatosDeTabla.getTitulosColumnas();
+	private DefaultTableModel dtm;
+
 	private JTextField jtfFiltro;
 	private JTable table;
 	private JButton btnFiltrar;
@@ -129,7 +137,8 @@ public class JPanelTipoContrato extends JPanel {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						if (e.getClickCount() == 2) {
-							getTipoContratoFromTable();
+							selectedTc = getTipoContratoFromTable();
+							panelContrato.getCurrent().setTipocontrato(selectedTc);
 							jd.dispose();
 						}
 					}
@@ -138,7 +147,8 @@ public class JPanelTipoContrato extends JPanel {
 	}
 	
 	private DefaultTableModel getDefaultTableModel () {
-		DefaultTableModel dtm = new DefaultTableModel(datosEnTabla, titulosEnTabla) {
+		DefaultTableModel dtm = new DefaultTableModel(DatosDeTabla.getDatosDeTabla(tiposContrato),
+				DatosDeTabla.getTitulosColumnas()) {
 			
 			/**
 			 * La sobreescritura de este método nos permite controlar qué celdas queremos que sean editables
@@ -195,6 +205,7 @@ public class JPanelTipoContrato extends JPanel {
 		
 		// Actualizamos los datos de la tabla. De esta manera, mantenemos
 		// el mouseListener de la tabla.
+		// Importante mirar el método getDatosDeTabla y modificarlo con la lista.
 		this.dtm.setDataVector(DatosDeTabla.getDatosDeTabla(filteredTiposContrato),
 				DatosDeTabla.getTitulosColumnas());
 		// Se notifican los posibles cambios de las celdas de la tabla.

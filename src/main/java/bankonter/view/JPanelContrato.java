@@ -279,6 +279,11 @@ public class JPanelContrato extends JPanel {
 		btnSeleccionaTipoDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				showJDialogTipoContrato();
+				if (current != null) {
+					jtfTipoContrato.setText(
+							current.getTipocontrato().getId() + " - "
+							+ current.getTipocontrato().getDescripcion());
+				}
 			}
 		});
 		GridBagConstraints gbc_btnSeleccionaTipoDe = new GridBagConstraints();
@@ -306,6 +311,11 @@ public class JPanelContrato extends JPanel {
 		jtfUsuario.setColumns(10);
 		
 		btnSeleccionaUsuario = new JButton("Selecciona usuario");
+		btnSeleccionaUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showJDialogUsuario();
+			}
+		});
 		btnSeleccionaUsuario.setIcon(new ImageIcon(JPanelContrato.class.getResource("/bankonter/res/usuario.png")));
 		GridBagConstraints gbc_btnSeleccionaUsuario = new GridBagConstraints();
 		gbc_btnSeleccionaUsuario.fill = GridBagConstraints.HORIZONTAL;
@@ -442,7 +452,7 @@ public class JPanelContrato extends JPanel {
 	public void showFirstContrato() {
 		current = (Contrato) ControladorContratoJPA.getInstance().findFirst();
 		
-		showContratoData(current);
+		if (current != null) showContratoData(current);
 	}
 	
 	public void showContratoData(Contrato c) {
@@ -462,19 +472,19 @@ public class JPanelContrato extends JPanel {
 	public void showNextContrato() {
 		current = (Contrato) ControladorContratoJPA.getInstance().findNext(current.getId());
 		
-		showContratoData(current);
+		if (current != null) showContratoData(current);
 	}
 	
 	public void showPreviousContrato() {
 		current = (Contrato) ControladorContratoJPA.getInstance().findPrevious(current.getId());
 		
-		showContratoData(current);
+		if (current != null) showContratoData(current);
 	}
 	
 	public void showLastContrato() {
 		current = (Contrato) ControladorContratoJPA.getInstance().findLast();
 		
-		showContratoData(current);
+		if (current != null) showContratoData(current);
 	}
 
 	public void setLblEstadoToDefault() {
@@ -554,6 +564,40 @@ public class JPanelContrato extends JPanel {
 				(Toolkit.getDefaultToolkit().getScreenSize().height)/2 - dialogo.getHeight()/2);
 		// Muestro el di�logo en pantalla
 		dialogo.setVisible(true);
+	}
+	
+	private void showJDialogUsuario() {
+		
+		JDialog dialogo = new JDialog();
+		// El usuario no puede redimensionar el diálogo
+		dialogo.setResizable(true);
+		// título del díalogo
+		dialogo.setTitle("JDialog - Gestión Proveedor");
+		// Introducimos el PanelProveedor al JDialog,
+		// pasándole como parámetro el PanelArticulo actual. Es decir,
+		// estamos pasando una referencia a la instancia actual de
+		// PanelArticulo.
+		// Además, le pasamos el panelProveedor el propio JDialog, consiguiendo
+		// una instancia del mismo para poder realizar la actualización de los
+		// datos del jcbProveedores.
+		dialogo.setContentPane(new JPanelUsuario(this, dialogo));
+		// Empaquetar el di�logo hace que todos los componentes ocupen el espacio que deben y el lugar adecuado
+		dialogo.pack();
+		// El usuario no puede hacer clic sobre la ventana padre, si el Di�logo es modal
+		dialogo.setModal(true);
+		// Centro el di�logo en pantalla
+		dialogo.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width)/2 - dialogo.getWidth()/2, 
+				(Toolkit.getDefaultToolkit().getScreenSize().height)/2 - dialogo.getHeight()/2);
+		// Muestro el di�logo en pantalla
+		dialogo.setVisible(true);
+	}
+
+	public Contrato getCurrent() {
+		return current;
+	}
+
+	public void setCurrent(Contrato current) {
+		this.current = current;
 	}
 	
 }

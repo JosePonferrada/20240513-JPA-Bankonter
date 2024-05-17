@@ -6,7 +6,7 @@ import bankonter.controladores.ControladorTipoContratoJPA;
 import bankonter.entities.Tipocontrato;
 
 public class DatosDeTabla {
-
+	
 	/** 
 	 * 
 	 * @return
@@ -19,10 +19,9 @@ public class DatosDeTabla {
 	 * 
 	 * @return
 	 */
-	public static Object[][] getDatosDeTabla(List<Tipocontrato> tiposContrato) {
+	public static Object[][] getDatosDeTabla(List<Tipocontrato> listTipoContrato) {
 		// Obtengo todos los tipoContrato.
-		tiposContrato = (List<Tipocontrato>) ControladorTipoContratoJPA
-				.getInstance().findAll();
+		List<Tipocontrato> tiposContrato = listTipoContrato;
 		
 		
 		// Preparo una estructura para pasar al constructor de la JTable
