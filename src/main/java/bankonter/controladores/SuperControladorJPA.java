@@ -144,6 +144,14 @@ public class SuperControladorJPA {
 		em.getTransaction().commit();
 	}
 	
+	public void insertEntidad(Entidad e) {
+		EntityManager em = getEntityManager();
+		
+		em.getTransaction().begin();
+		em.persist(e);
+		em.getTransaction().commit();
+	}
+	
 	
 	
 }
